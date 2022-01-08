@@ -11,16 +11,8 @@ class App extends Component {
   }
 
   render() {
-    // const { thumbnail } = superhero.data.results[0];
-    // console.log({ thumbnail });
     return <List result={this.state.selected} />;
   }
-
-  // handleSelection(index) {
-  //   this.setState({
-  //     selected: this.state.selected.concat(index),
-  //   })
-  // }
 }
 
 export default App;

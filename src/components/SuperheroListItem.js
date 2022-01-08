@@ -1,16 +1,23 @@
 import React, { Component } from "react";
 
 class ListItem extends Component {
-//   constructor(props) {
-//     super(props);
-//     // this.handleClick = this.handleClick.bind(this);
-//     // this.state = {
-//     //   selected: false,
-//     // };
-//   }
+  async componentDidMount() {
+    const apiUrl = "http(s)://gateway.marvel.com/";
+    const apiKey = "&apikey=99bd6fdc7f43aa8df9a26fabd645e5ee";
+    const apiFullUrl = `${apiUrl}v1/public/characters?${apiKey}`;
+
+    try {
+      const response = await fetch(apiFullUrl);
+      const data = await response.json();
+      console.log(data)
+    //   return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   render() {
-    const metaData = this.props.superhero;
+    const metaData = this.props.data;
     const { thumbnail, comics, series, stories, events, urls } = metaData;
 
     return (
@@ -73,15 +80,6 @@ class ListItem extends Component {
       </div>
     );
   }
-
-//   handleClick() {
-//     if (this.props.onSelect) {
-//       this.props.onSelect(this.props.key);
-//     }
-//     this.setState({
-//       selected: !this.state.selected,
-//     });
-//   }
 }
 
 export default ListItem;
