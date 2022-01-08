@@ -1,24 +1,26 @@
-import './App.css';
-import { Route, Switch } from 'react-router-dom';
-import FrontCover from './pages/FrontCover';
-import About from './pages/About'
-import Superheroes from './pages/Superheroes';
-import SuperShow from './components/SuperShow';
-import { SuperheroContextProvider } from './contexts/SuperheroContext';
+import React, { Component } from "react";
+import "./App.css";
+import List from "./components/SuperheroList";
 
-function App() {
-  return (
-    <div className='App'>
-      <SuperheroContextProvider>
-        <Switch>
-          <Route path='/' exact component={FrontCover} />
-          <Route path='/' exact component={About} />
-          <Route path='/' exact component={Superheroes} />
-          <Route path='/' exact component={SuperShow} />
-        </Switch>
-      </SuperheroContextProvider>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: [],
+    };
+  }
+
+  render() {
+    // const { thumbnail } = superhero.data.results[0];
+    // console.log({ thumbnail });
+    return <List result={this.state.selected} />;
+  }
+
+  // handleSelection(index) {
+  //   this.setState({
+  //     selected: this.state.selected.concat(index),
+  //   })
+  // }
 }
 
 export default App;
