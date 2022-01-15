@@ -1,27 +1,56 @@
 import axios from "axios";
 
 export class MarvelService {
+  static get ENDPOINTS() {
+    return {
+      comic: "https://gateway.marvel.com:443/v1/public/comics",
+      comics: "https://gateway.marvel.com:443/v1/public/comics",
+      character: "https://gateway.marvel.com:443/v1/public/characters",
+      characters: "https://gateway.marvel.com:443/v1/public/characters"
+    };
+  }
 
-    static get ENDPOINTS() {
-        return {
-            comic: 'https://gateway.marvel.com:443/v1/public/comics',
-            comics: 'https://gateway.marvel.com:443/v1/public/comics',
-            character: 'https://gateway.marvel.com:443/v1/public/characters',
-            characters: 'https://gateway.marvel.com:443/v1/public/characters',
-        };
-    }
-    constructor(config) {
-        this.apiKey = config.apiKey;
-    }
-    getAuthConfig() {
-        return { apiKey: this.apiKey };
-    }
+  constructor(config) {
+    this.apiKey = config.apiKey;
+  }
 
-    getCharacters(config = {}) {
+  getAuthConfig() {
+    return { apikey: this.apiKey };
+  }
 
-    }
+  getCharacters(config = {}) {
+    const params = { ...config, ...this.getAuthConfig() };
 
-    getCharacter(id, config = {}) {
-        
-    }
+    const endpoint = MarvelService.ENDPOINTS.characters;
+
+    return axios.get(endpoint, { params: params }).then((response) => {
+      return response.data.data;
+    });
+  }
+
+  getCharacter(id, config = {}) {
+    const params = { ...config, ...this.getAuthConfig() };
+
+    const endpoint = MarvelService.ENDPOINTS.character + "/" + id;
+
+    return axios.get(endpoint, { params: params }).then((response) => {
+      return response.data.data;
+    });
+  }
+
+  getComics(config = {}) {
+    const params = { ...config, ...this.getAuthConfig() };
+    const endpoint = MarvelService.ENDPOINTS.comics;
+    return axios.get(endpoint, { params: params }).then((response) => {
+      return response.data.data;
+    });
+  }
+
+  getComic(id, config = {}) {
+    const params = { ...config, ...this.getAuthConfig() };
+    const endpoint = MarvelService.ENDPOINTS.comic + "/" + id;
+    return axios.get(endpoint, { params: params }).then((response) => {
+      return response.data.data;
+    });
+  }
 }
