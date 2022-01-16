@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import { ResultsList } from './Components/ResultsList';
-import { ResultDetails } from './Components/ResultDetails';
-import { SearchBar } from './Components/SearchBar';
+import { ResultDetails } from './Components/CharacterTable';
+import { SearchBar } from './Components/Search';
 import { Error } from './Components/Error';
 import { Loading } from './Components/Loading';
 import { LoadMore } from './Components/LoadMore';

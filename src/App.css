@@ -16,7 +16,7 @@ nav {
 }
 
 .nav-links {
-  width: 40%;
+  width: 50%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -28,4 +28,29 @@ nav {
 h1 {
   color: #EC1D23;
   font-size: 3rem;
+}
+
+.reset {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.short-details {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.favourites {
+  font-size: 3rem;
+  color: #EC1D23;
+  outline-style: auto;
+  outline-color: black;
+  border-radius: 10%;
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
 }

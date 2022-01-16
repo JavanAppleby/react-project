@@ -1,35 +1,67 @@
 import React, { useEffect, useState, useContext } from "react";
 import md5 from "js-md5";
-import { MarvelService } from "../services/MarvelService";
+import axios from "axios";
+import Search from "../Components/Search";
+import CharacterTable from "../Components/CharacterTable";
+import App from "../App.css";
 
 const Characters = () => {
-  const [characters, setCharacters] = useState([]);
+  const [items, setItems] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [query, setQuery] = useState("");
+
+  const apiKey = process.env.REACT_APP_MARVEL_API_KEY;
+  const privateApiKey = process.env.REACT_APP_MARVEL_PRIVATE_API_KEY;
+  const ts = Date.now();
+  const hash = md5.create();
+  hash.update(ts + privateApiKey + apiKey);
 
   useEffect(() => {
-    fetchCharacters();
-  }, []);
+    const fetch = async () => {
+      if (query === "") {
+        if (
+          localStorage.getItem("favorites") === "[]" ||
+          !localStorage.getItem("favorites")
+        ) {
+          localStorage.setItem("favorites", "[]");
+          const result = await axios(
+            `https://gateway.marvel.com:443/v1/public/characters?&ts=${ts}&apikey=${apiKey}&hash=${hash}`
+          );
+          console.log(result.data.data.results);
+          setItems(result.data.data.results);
+          setLoading(false);
+        } else {
+          let favorite = JSON.parse(localStorage.getItem("favorites"));
+          setItems(favorite);
+          setLoading(false);
+        }
+      } else {
+        const result = await axios(
+          `https://gateway.marvel.com:443/v1/public/characters?&ts=1&apikey=${apiKey}`
+        );
+        console.log(result.data.data.results);
+        setItems(result.data.data.results);
+        setLoading(false);
+      }
+    };
+    fetch();
+  }, [query]);
 
-  async function fetchCharacters() {
-    const ts = Number(new Date());
-    const apiKey = process.env.REACT_APP_MARVEL_API_KEY;
-    const hash = md5.create();
-    hash.update(
-      ts +
-        process.env.REACT_APP_MARVEL_API_KEY +
-        process.env.REACT_APP_MARVEL_PRIVATE_API_KEY
-    );
-    const hashManual = "a903d8d17499132dd7616e950f7f6298"
-    const url = `https://gateway.marvel.com:443/v1/public/characters?ts=${ts}&orderBy=name&apikey=${apiKey}&hash=${hashManual}`;
+  const resetTeam = localStorage.clear();
 
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(hash);
-    setCharacters(characters);
-  }
+  console.log(localStorage);
 
   return (
-    <div>
-      <h1>Characters</h1>
+    <div className="Characters">
+      <span>
+        <h1>Characters</h1>
+        <div className="reset">
+          <p className="favourites">Current Team: {localStorage.team}</p>
+          <button onClick={resetTeam}>Reset Team</button>
+        </div>
+      </span>
+      <Search search={(q)=>setQuery(q)}></Search>
+      <CharacterTable items={items} isLoading={isLoading} />
     </div>
   );
 };
