@@ -74,8 +74,6 @@ class Characters extends Component {
   }
 
   fetchCharacter = () => {
-    const [isLoading, setIsLoading] = useState(true);
-
     const apiKey = process.env.REACT_APP_MARVEL_API_KEY;
     const privateApiKey = process.env.REACT_APP_MARVEL_PRIVATE_API_KEY;
     const ts = Date.now();
@@ -84,10 +82,9 @@ class Characters extends Component {
 
     const getCharacter = async () => {
       const result = await axios(
-        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${this.state.searchCharacter}&ts=1&apikey=${apiKey}&hash=${hash}`
+        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${this.state.searchCharacter}&ts=${ts}&apikey=${apiKey}&hash=${hash}`
       );
       this.setState({ results: result.data.data.results });
-      setIsLoading(false);
     };
     getCharacter();
   };
