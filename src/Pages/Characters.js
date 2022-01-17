@@ -1,69 +1,96 @@
-import React, { useEffect, useState, useContext } from "react";
-import md5 from "js-md5";
+import { useState, Component } from "react";
 import axios from "axios";
-import Search from "../Components/Search";
-import CharacterTable from "../Components/CharacterTable";
-import App from "../App.css";
+import SearchBar from "../Components/Search Box/SearchBar";
+import md5 from "js-md5";
+import CharacterTable from "../Components/Character/CharacterTable";
+import CharacterItem from "../Components/Character/CharacterItem";
+import App from "../App";
+import React from "react";
+import Loading from "../Components/Search Box/Loading";
+import Error from "../Components/API/Error";
 
-const Characters = () => {
-  const [items, setItems] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [query, setQuery] = useState("");
+class Characters extends Component {
+  constructor(props) {
+    super(props);
 
-  const apiKey = process.env.REACT_APP_MARVEL_API_KEY;
-  const privateApiKey = process.env.REACT_APP_MARVEL_PRIVATE_API_KEY;
-  const ts = Date.now();
-  const hash = md5.create();
-  hash.update(ts + privateApiKey + apiKey);
-
-  useEffect(() => {
-    const fetch = async () => {
-      if (query === "") {
-        if (
-          localStorage.getItem("favorites") === "[]" ||
-          !localStorage.getItem("favorites")
-        ) {
-          localStorage.setItem("favorites", "[]");
-          const result = await axios(
-            `https://gateway.marvel.com:443/v1/public/characters?&ts=${ts}&apikey=${apiKey}&hash=${hash}`
-          );
-          console.log(result.data.data.results);
-          setItems(result.data.data.results);
-          setLoading(false);
-        } else {
-          let favorite = JSON.parse(localStorage.getItem("favorites"));
-          setItems(favorite);
-          setLoading(false);
-        }
-      } else {
-        const result = await axios(
-          `https://gateway.marvel.com:443/v1/public/characters?&ts=1&apikey=${apiKey}`
-        );
-        console.log(result.data.data.results);
-        setItems(result.data.data.results);
-        setLoading(false);
-      }
+    this.state = {
+      searchCharacter: "",
+      results: [],
+      selectedResult: null,
     };
-    fetch();
-  }, [query]);
 
-  const resetTeam = localStorage.clear();
+    this.fetchCharacter = this.fetchCharacter.bind(this);
+  }
 
-  console.log(localStorage);
+  render() {
+    const searchResults = this.state.hasError ? (
+      <Error />
+    ) : this.state.isLoading ? (
+      <Loading searchCharacter={this.state.searchCharacter} />
+    ) : (
+      <CharacterTable
+        results={this.state.results}
+        searchCharacter={this.state.searchCharacter}
+      />
+    );
 
-  return (
-    <div className="Characters">
-      <span>
+    const searchDetails = this.state.selectedResult ? (
+      <CharacterItem
+        image={
+          this.state.selectedResult.thumbnail.path +
+          "." +
+          this.state.selectedResult.thumbnail.extension
+        }
+        title={this.state.selectedResult.name}
+        description={this.state.selectedResult.description}
+        stories={this.state.selectedResult.stories}
+        urls={this.state.selectedResult.urls}
+        onClose={() => this.setState({ selectedResult: null })}
+      />
+    ) : (
+      ""
+    );
+
+    return (
+      <div className="character-results">
         <h1>Characters</h1>
-        <div className="reset">
-          <p className="favourites">Current Team: {localStorage.team}</p>
-          <button onClick={resetTeam}>Reset Team</button>
-        </div>
-      </span>
-      <Search search={(q)=>setQuery(q)}></Search>
-      <CharacterTable items={items} isLoading={isLoading} />
-    </div>
-  );
-};
+        <SearchBar
+          searchCharacter={this.state.searchCharacter}
+          onSubmit={(searchCharacter) => this.setState({ searchCharacter })}
+        />
+        {searchResults}
+        {searchDetails}
+      </div>
+    );
+  }
+
+  componentDidUpdate(_, prevState) {
+    const searchCharacter = this.state.searchCharacter;
+    const prevSearchCharacter = prevState.searchCharacter;
+
+    if (searchCharacter && searchCharacter !== prevSearchCharacter) {
+      this.fetchCharacter();
+    }
+  }
+
+  fetchCharacter = () => {
+    const [isLoading, setIsLoading] = useState(true);
+
+    const apiKey = process.env.REACT_APP_MARVEL_API_KEY;
+    const privateApiKey = process.env.REACT_APP_MARVEL_PRIVATE_API_KEY;
+    const ts = Date.now();
+    const hash = md5.create();
+    hash.update(ts + privateApiKey + apiKey);
+
+    const getCharacter = async () => {
+      const result = await axios(
+        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${this.state.searchCharacter}&ts=1&apikey=${apiKey}&hash=${hash}`
+      );
+      this.setState({ results: result.data.data.results });
+      setIsLoading(false);
+    };
+    getCharacter();
+  };
+}
 
 export default Characters;
