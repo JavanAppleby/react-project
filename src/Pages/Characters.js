@@ -17,6 +17,7 @@ class Characters extends Component {
       searchCharacter: "",
       results: [],
       selectedResult: null,
+      searchStats: [],
     };
 
     this.fetchCharacter = this.fetchCharacter.bind(this);

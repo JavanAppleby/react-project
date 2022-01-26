@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./Character.css";
 
 export class CharacterItem extends Component {
   render() {

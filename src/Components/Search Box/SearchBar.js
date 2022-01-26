@@ -18,7 +18,7 @@ export class SearchBar extends Component {
           className="search-bar__field"
           type="text"
           value={this.state.searchCharacter}
-          placeholder="Cerebro Character Database Search: ONLINE"
+          placeholder="e.g. Gambit"
           onChange={(e) => this.setState({ searchCharacter: e.target.value })}
         />
         <button className="search-bar__submit" type="submit">

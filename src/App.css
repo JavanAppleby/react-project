@@ -55,14 +55,35 @@ h1 {
   padding: 1rem;
 }
 
-.search {
-  align-items: center;
-  justify-content: space-around;
+.search-bar {
   display: flex;
-  font-size: 2rem;
-  width: 100%;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.search ::placeholder {
+.search-bar__field {
+  align-items: center;
+  justify-content: space-evenly;
+  display: flex;
+  font-size: 2rem;
+  width: 50%;
+}
+
+.search-bar ::placeholder {
+  font-size: 1rem;
+}
+
+.search-bar__submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.2em;
+  margin: 0.5em;
   font-size: 1.5rem;
+  font-weight: bold;
+  color: #ec1d23;
+}
+
+.character-card {
+  margin-top: 2rem;
 }

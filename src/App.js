@@ -6,6 +6,7 @@ import About from "./Pages/About";
 import Characters from "./Pages/Characters";
 import Leaderboard from "./Pages/Leaderboard";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
   return (
