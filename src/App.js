@@ -6,13 +6,15 @@ import About from "./Pages/About";
 import Characters from "./Pages/Characters";
 import Leaderboard from "./Pages/Leaderboard";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useState } from "react";
+import { ThemeContext, theme } from "./Contexts/ThemeContext";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Nav />
+        <ThemeContext.Provider value={theme.shield}>
+          <Nav />
+        </ThemeContext.Provider>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/about" exact component={About} />

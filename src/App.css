@@ -4,7 +4,7 @@
 
 .myApp {
   color: white;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 nav {
@@ -16,18 +16,18 @@ nav {
 }
 
 .nav-links {
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   list-style: none;
   color: white;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 h1 {
   color: #ec1d23;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .reset {
@@ -86,4 +86,10 @@ h1 {
 
 .character-card {
   margin-top: 2rem;
+}
+
+.welcome {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
 }

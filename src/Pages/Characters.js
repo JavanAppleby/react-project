@@ -1,94 +1,65 @@
-import { useState, Component } from "react";
+import { React, useState, useEffect } from "react";
+import "../App.css";
+import Search from "../Components/Search Box/SearchBar";
 import axios from "axios";
-import SearchBar from "../Components/Search Box/SearchBar";
 import md5 from "js-md5";
 import CharacterTable from "../Components/Character/CharacterTable";
-import CharacterItem from "../Components/Character/CharacterItem";
-import App from "../App";
-import React from "react";
-import Loading from "../Components/Search Box/Loading";
-import Error from "../Components/API/Error";
+import CharacterCard from "../Components/Character/CharacterCard";
+import "../Components/Character/Character.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-class Characters extends Component {
-  constructor(props) {
-    super(props);
+function Character() {
+  const [items, setItems] = useState([]);
+  const [fetchError, setFetchError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [query, setQuery] = useState("");
 
-    this.state = {
-      searchCharacter: "",
-      results: [],
-      selectedResult: null,
-      searchStats: [],
-    };
+  useEffect(() => {
+    let isMounted = true;
+    const source = axios.CancelToken.source();
 
-    this.fetchCharacter = this.fetchCharacter.bind(this);
-  }
+    const fetch = async () => {
+      const apiKey = process.env.REACT_APP_MARVEL_API_KEY;
+      const privateApiKey = process.env.REACT_APP_MARVEL_PRIVATE_API_KEY;
+      const ts = Date.now();
+      const hash = md5.create();
+      hash.update(ts + privateApiKey + apiKey);
+      const url = `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${query}&ts=${ts}&apikey=${apiKey}&hash=${hash}`;
 
-  render() {
-    const searchResults = this.state.hasError ? (
-      <Error />
-    ) : this.state.isLoading ? (
-      <Loading searchCharacter={this.state.searchCharacter} />
-    ) : (
-      <CharacterTable
-        results={this.state.results}
-        searchCharacter={this.state.searchCharacter}
-      />
-    );
-
-    const searchDetails = this.state.selectedResult ? (
-      <CharacterItem
-        image={
-          this.state.selectedResult.thumbnail.path +
-          "." +
-          this.state.selectedResult.thumbnail.extension
+      setIsLoading(true);
+      try {
+        const response = await axios.get(url, {
+          concelToken: source.token,
+        });
+        if (isMounted) {
+          setItems(response.data.data.results);
+          setFetchError(null);
         }
-        title={this.state.selectedResult.name}
-        description={this.state.selectedResult.description}
-        stories={this.state.selectedResult.stories}
-        urls={this.state.selectedResult.urls}
-        onClose={() => this.setState({ selectedResult: null })}
-      />
-    ) : (
-      ""
-    );
-
-    return (
-      <div className="character-results">
-        <h1>Characters</h1>
-        <SearchBar
-          searchCharacter={this.state.searchCharacter}
-          onSubmit={(searchCharacter) => this.setState({ searchCharacter })}
-        />
-        {searchResults}
-        {searchDetails}
-      </div>
-    );
-  }
-
-  componentDidUpdate(_, prevState) {
-    const searchCharacter = this.state.searchCharacter;
-    const prevSearchCharacter = prevState.searchCharacter;
-
-    if (searchCharacter && searchCharacter !== prevSearchCharacter) {
-      this.fetchCharacter();
-    }
-  }
-
-  fetchCharacter = () => {
-    const apiKey = process.env.REACT_APP_MARVEL_API_KEY;
-    const privateApiKey = process.env.REACT_APP_MARVEL_PRIVATE_API_KEY;
-    const ts = Date.now();
-    const hash = md5.create();
-    hash.update(ts + privateApiKey + apiKey);
-
-    const getCharacter = async () => {
-      const result = await axios(
-        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${this.state.searchCharacter}&ts=${ts}&apikey=${apiKey}&hash=${hash}`
-      );
-      this.setState({ results: result.data.data.results });
+      } catch (err) {
+        if (isMounted) {
+          setFetchError(err.message);
+          setItems([]);
+        }
+      } finally {
+        isMounted && setIsLoading(false);
+      }
     };
-    getCharacter();
-  };
+    fetch();
+    const cleanUp = () => {
+      isMounted = false;
+      source.cancel();
+    };
+    return cleanUp;
+  }, [query]);
+
+  return (
+    <div>
+      <h1>Characters</h1>
+      <Search search={(q) => setQuery(q)}></Search>
+      <CharacterTable items={items} isLoading={isLoading} />
+      {/* <CharacterCard /> */}
+    </div>
+  );
 }
 
-export default Characters;
+export default Character;

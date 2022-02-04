@@ -1,36 +1,25 @@
-import React, { Component } from "react";
+import { React, useState } from "react";
 
-export class SearchBar extends Component {
-  constructor(props) {
-    super(props);
+const Search = ({ search }) => {
+  const [text, setText] = useState("");
 
-    this.state = {
-      searchCharacter: props.searchCharacter,
-    };
+  const onSearch = (q) => {
+    setText(q);
+    search(q);
+  };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  return (
+    <form className="search-bar">
+      <input
+        className="search-bar__field"
+        type="text"
+        placeholder="e.g. Gambit"
+        autoFocus
+        onChange={(e) => onSearch(e.target.value)}
+        value={text}
+      />
+    </form>
+  );
+};
 
-  render() {
-    return (
-      <form className="search-bar" onSubmit={this.handleSubmit}>
-        <input
-          className="search-bar__field"
-          type="text"
-          value={this.state.searchCharacter}
-          placeholder="e.g. Gambit"
-          onChange={(e) => this.setState({ searchCharacter: e.target.value })}
-        />
-        <button className="search-bar__submit" type="submit">
-          Initiate Search
-        </button>
-      </form>
-    );
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.onSubmit(this.state.searchCharacter);
-  }
-}
-export default SearchBar;
+export default Search;

@@ -7,6 +7,7 @@ function Home() {
       <h1>Home</h1>
       <section className="welcome">
         <h3>Greetings!</h3>
+        <br></br>
         <p>
           Welcome to the <strong>EXTRAORDINARY TEAM CHALLENGE</strong> presented
           to you by <a href="https://github.com/JavanAppleby">Javan Appleby</a>
