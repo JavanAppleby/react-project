@@ -1,16 +1,16 @@
 import { createContext } from "react";
 
-const theme = {
+const themes = {
   shield: {
-    foreground: "#70d2e6",
+    foreground: "#ffffff",
     background: "#70d2e6",
   },
   hydra: {
-    foreground: "#ab2745",
+    foreground: "#ffffff",
     background: "#ab2745",
   },
 };
 
-const ThemeContext = createContext(theme.shield);
+const ThemeContext = createContext(themes.shield);
 
-export { ThemeContext, theme };
+export { ThemeContext, themes };

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  min-height: calc(100vh - 50px);
 }
 
 .myApp {
@@ -92,4 +93,22 @@ h1 {
   display: inline-block;
   justify-content: center;
   align-items: center;
+}
+
+.footer {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.shield {
+  color: #ffffff;
+  background-color: #70d2e6;
+}
+
+.hydra {
+  color: #ffffff;
+  background-color: #ab2745;
 }

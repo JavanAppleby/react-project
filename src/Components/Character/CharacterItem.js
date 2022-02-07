@@ -1,10 +1,10 @@
 import React from "react";
 
 const CharacterItem = ({ item }) => {
-  const add = (item) => {
-    // getting the previous element and adding the new favorite item
-    let previousData = JSON.parse(localStorage.getItem("Extraordinary Team"));
-    previousData.push(item);
+  const add = (id) => {
+    let previousData =
+      JSON.parse(localStorage.getItem("Extraordinary Team")) || [];
+    previousData.push(id);
     localStorage.setItem("Extraordinary Team", JSON.stringify(previousData));
     console.log(localStorage);
     console.log(previousData);
@@ -12,17 +12,13 @@ const CharacterItem = ({ item }) => {
 
   const urlSet = () => {
     const urlElem = item.urls;
-    let urlList = "";
-    let i = 0;
-    while (i < urlElem.length) {
-      urlList +=
-        `${urlElem[i].type.charAt(0).toUpperCase()}${urlElem[i].type.slice(
-          1
-        )}: ` +
-        `<a href=${urlElem[i].url} alt=${urlElem[i].type} />` +
-        " ";
-      i++;
-    }
+    return urlElem.map((urlElem) => (
+      <div>
+        <a href={urlElem.url} alt={urlElem.type}>
+          {urlElem.type}
+        </a>
+      </div>
+    ));
   };
 
   return (
@@ -51,7 +47,7 @@ const CharacterItem = ({ item }) => {
             <p className="description">{item.description}</p>
           </div>
           <br></br>
-          <p className="urls">{this.urlSet().value.toString}</p>
+          <p className="urls">{urlSet()}</p>
           <button className="view-card" value={item.id}>
             View Character Card
           </button>

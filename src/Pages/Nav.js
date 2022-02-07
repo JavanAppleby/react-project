@@ -1,6 +1,6 @@
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
 import "../App.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../Contexts/ThemeContext";
 
 const link = {
@@ -14,24 +14,23 @@ const link = {
 
 function Nav() {
   const theme = useContext(ThemeContext);
-  console.log("THEME CONTEXT:", theme);
 
   return (
-    <nav>
+    <nav style={theme}>
       <h3 className="myApp">Extraordinary Team Challenge</h3>
       <ul className="nav-links">
-        <Link to="/" exact style={link}>
+        <NavLink to="/" exact style={link}>
           <li>Home</li>
-        </Link>
-        <Link to="/about" exact style={link}>
+        </NavLink>
+        <NavLink to="/about" exact style={link}>
           <li>About</li>
-        </Link>
-        <Link to="/characters" exact style={link}>
+        </NavLink>
+        <NavLink to="/characters" exact style={link}>
           <li>Characters</li>
-        </Link>
-        <Link to="/leaderboard" exact style={link}>
+        </NavLink>
+        <NavLink to="/leaderboard" exact style={link}>
           <li>Leaderboard</li>
-        </Link>
+        </NavLink>
       </ul>
     </nav>
   );
