@@ -1,13 +1,14 @@
-import React from "react";
+import { React, useState } from "react";
 
 const CharacterItem = ({ item }) => {
-  const add = (id) => {
+  const [team, setTeam] = useState([]);
+
+  const add = (character) => {
     let previousData =
-      JSON.parse(localStorage.getItem("Extraordinary Team")) || [];
-    previousData.push(id);
-    localStorage.setItem("Extraordinary Team", JSON.stringify(previousData));
-    console.log(localStorage);
-    console.log(previousData);
+      JSON.parse(sessionStorage.getItem("Extraordinary Team")) || [];
+    previousData.push(character);
+    setTeam(previousData);
+    sessionStorage.setItem("Extraordinary Team", JSON.stringify(previousData));
   };
 
   const urlSet = () => {
@@ -23,17 +24,18 @@ const CharacterItem = ({ item }) => {
 
   return (
     <div className="character-card">
-      <div className="card-header">
-        <h2>{item.name}</h2>
-        <br></br>
-        <button className="add" type="button" onClick={() => add(item)}>
-          Add to Team
-        </button>
-      </div>
+      <br></br>
+      <button className="add" type="button" onClick={() => add(item)}>
+        Add to Team
+      </button>
       <div className="character-card__frame">
         <div className="character-card">
-          <img src={item.thumbnail.path + "/portrait_xlarge.jpg"} alt="" />
-          <div className="character-info">
+          <h2>{item.name}</h2>
+          <img
+            src={item.thumbnail.path + "/portrait_xlarge.jpg"}
+            alt={item.name}
+          />
+          {/* <div className="character-info">
             <p>#{item.id}</p>
             <h4>Appearances:</h4>
             <p>
@@ -47,7 +49,7 @@ const CharacterItem = ({ item }) => {
             <p className="description">{item.description}</p>
           </div>
           <br></br>
-          <p className="urls">{urlSet()}</p>
+          <p className="urls">{urlSet()}</p> */}
           <button className="view-card" value={item.id}>
             View Character Card
           </button>

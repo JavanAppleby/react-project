@@ -1,13 +1,32 @@
 .character-card {
   display: inline-block;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  width: fit-content;
-  height: fit-content;
   padding: 1rem;
+  max-width: 20rem;
+  min-height: max-content;
+  max-height: fit-content;
 }
 
 h2 {
+  flex-wrap: wrap;
+  max-width: 20rem;
+  align-items: center;
+  display: inline-flex;
+  color: #ec1d23;
+  font-size: 1vmin;
+}
+
+.character-card h2 {
+  flex-wrap: wrap;
+  max-width: 20rem;
+  align-items: center;
+  display: inline-flex;
+  color: #ec1d23;
+  font-size: 2vmin;
+}
+
+.extraordinary-team h2 {
   flex-wrap: wrap;
   max-width: 20rem;
   align-items: center;
@@ -25,6 +44,7 @@ img {
   border: 3px solid #ec1d23;
   border-radius: 5%;
   width: fit-content;
+  margin-top: 1rem;
 }
 
 button.view-card {
@@ -37,7 +57,8 @@ button.view-card {
   border-radius: 40%;
   box-shadow: 1px 3px 10px #ec1d23;
   padding: 0.5rem;
-  font-size: 0.8vmax;
+  font-size: 1rem;
+  margin-top: 1rem;
 }
 
 button.add {
@@ -48,6 +69,18 @@ button.add {
   box-shadow: 1px 3px 10px #ec1d23;
   padding: 1rem;
   margin-top: 1rem;
+  font-size: 1vmax;
+}
+
+button.reset {
+  background: none;
+  color: #ec1d23;
+  font-weight: bold;
+  border-radius: 40%;
+  box-shadow: 1px 3px 10px #ec1d23;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-size: 1.2vmax;
 }
 
@@ -71,4 +104,36 @@ p.description {
 
 .character-urls {
   padding-bottom: 1rem;
+}
+
+.team-container {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.character-card img {
+  max-width: 20rem;
+  max-height: 20rem;
+}
+
+button.remove {
+  background: none;
+  color: #ec1d23;
+  font-weight: bold;
+  border-radius: 40%;
+  box-shadow: 1px 3px 10px #ec1d23;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.2vmax;
+  flex-wrap: wrap;
+}
+
+.extraordinary-team {
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 3px solid #ec1d23;
+  border-radius: 5%;
+  width: 100%;
 }

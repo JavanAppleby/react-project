@@ -7,6 +7,9 @@ import CharacterTable from "../Components/Character/CharacterTable";
 import CharacterCard from "../Components/Character/CharacterCard";
 import "../Components/Character/Character.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Reset } from "../Components/Character/ResetTeam";
+import { Team } from "../Components/Character/ExtraordinaryTeam";
+import Footer from "./Footer";
 
 function Character() {
   const [items, setItems] = useState([]);
@@ -56,8 +59,9 @@ function Character() {
     <div>
       <h1>Characters</h1>
       <Search search={(q) => setQuery(q)}></Search>
+      <Reset />
+      <Team />
       <CharacterTable items={items} isLoading={isLoading} />
-      {/* <CharacterCard /> */}
     </div>
   );
 }
