@@ -1,3 +1,11 @@
+html,
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
 .App {
   text-align: center;
   min-height: calc(100vh - 50px);
@@ -14,6 +22,10 @@ nav {
   align-items: center;
   min-height: 10vh;
   background: #ec1d23;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .nav-links {
@@ -95,12 +107,25 @@ h1 {
   align-items: center;
 }
 
-.footer {
+footer {
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: #70d2e6;
+  color: #ffffff;
+}
+
+.attribution {
+  width: 50%;
+}
+
+footer.h6 {
+  width: 50%;
 }
 
 .shield {
@@ -111,4 +136,79 @@ h1 {
 .hydra {
   color: #ffffff;
   background-color: #ab2745;
+}
+
+.speech {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.speech img {
+  margin-right: 2rem;
+}
+
+.speech-bubbleL {
+  position: relative;
+  background: #70d2e6;
+  border-radius: 0.4em;
+}
+
+.speech-bubbleR {
+  position: relative;
+  background: #70d2e6;
+  border-radius: 0.4em;
+}
+
+.speech-bubbleL:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-right-color: #70d2e6;
+  border-left: 0;
+  border-bottom: 0;
+  margin-top: -10px;
+  margin-left: -20px;
+}
+
+.speech-bubbleR:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-left-color: #70d2e6;
+  border-right: 0;
+  border-bottom: 0;
+  margin-top: -10px;
+  margin-right: -20px;
+}
+
+.speech-bubbleL > * {
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.speech-bubbleR > * {
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.speech img {
+  display: block;
+  max-width: 430px;
+  max-height: 295px;
+  width: auto;
+  height: auto;
+  margin: 2rem;
 }

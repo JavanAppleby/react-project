@@ -9,14 +9,16 @@ function Footer() {
   };
 
   return (
-    <div className="footer">
-      <strong className="attribution">
-        Data provided by Marvel. © 2014 Marvel
-      </strong>
+    <footer>
       <div>
-        <h6>Current Allegiance: </h6>
+        <div>
+          <h6>Current Allegiance: </h6>
+        </div>
+        <strong className="attribution">
+          Data provided by Marvel. © 2014 Marvel
+        </strong>
       </div>
-    </div>
+    </footer>
   );
 }
 

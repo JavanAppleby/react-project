@@ -21,6 +21,9 @@ function App() {
       <div className="App">
         <ThemeContext.Provider value={themes.shield}>
           <Nav />
+          <br></br>
+          <br></br>
+          <br></br>
         </ThemeContext.Provider>
         <Switch>
           <Route path="/" exact component={Home} />

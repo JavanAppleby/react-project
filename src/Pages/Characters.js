@@ -32,7 +32,7 @@ function Character() {
       setIsLoading(true);
       try {
         const response = await axios.get(url, {
-          concelToken: source.token,
+          cancelToken: source.token,
         });
         if (isMounted) {
           setItems(response.data.data.results);
@@ -57,6 +57,9 @@ function Character() {
 
   return (
     <div>
+      <br></br>
+      <br></br>
+      <br></br>
       <h1>Characters</h1>
       <Search search={(q) => setQuery(q)}></Search>
       <Reset />

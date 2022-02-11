@@ -6,9 +6,17 @@ const CharacterItem = ({ item }) => {
   const add = (character) => {
     let previousData =
       JSON.parse(sessionStorage.getItem("Extraordinary Team")) || [];
-    previousData.push(character);
-    setTeam(previousData);
-    sessionStorage.setItem("Extraordinary Team", JSON.stringify(previousData));
+    if (previousData.length < 6) {
+      previousData.push(character);
+      setTeam(previousData);
+      sessionStorage.setItem(
+        "Extraordinary Team",
+        JSON.stringify(previousData)
+      );
+    } else
+      alert(
+        "Your team is full. To make a change, click Reset Team to start over, or hit Submit to finalise your Extraordinary Team!"
+      );
   };
 
   const urlSet = () => {
