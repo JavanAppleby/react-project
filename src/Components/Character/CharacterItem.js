@@ -8,7 +8,7 @@ const CharacterItem = ({ item }) => {
       JSON.parse(sessionStorage.getItem("Extraordinary Team")) || [];
     if (previousData.length < 6) {
       previousData.push(character);
-      setTeam(previousData);
+      setTeam((prevState) => [...prevState, character]);
       sessionStorage.setItem(
         "Extraordinary Team",
         JSON.stringify(previousData)

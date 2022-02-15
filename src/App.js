@@ -11,15 +11,16 @@ import { ThemeContext, themes } from "./Contexts/ThemeContext";
 import { useState } from "react";
 
 function App() {
-  const [themeset, setThemeset] = useState("shield");
+  const [themeset, setThemeset] = useState("hydra");
 
   const toggleTheme = () => {
     themeset === "shield" ? setThemeset("hydra") : setThemeset("shield");
   };
+
   return (
     <BrowserRouter>
       <div className="App">
-        <ThemeContext.Provider value={themes.shield}>
+        <ThemeContext.Provider value={themes[themeset]}>
           <Nav />
           <br></br>
           <br></br>
@@ -31,7 +32,7 @@ function App() {
           <Route path="/characters" exact component={Characters} />
           <Route path="/leaderboard" exact component={Leaderboard} />
         </Switch>
-        <ThemeContext.Provider value={themes.shield}>
+        <ThemeContext.Provider value={themes[themeset]}>
           <Footer />
         </ThemeContext.Provider>
       </div>

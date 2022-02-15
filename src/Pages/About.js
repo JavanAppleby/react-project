@@ -2,18 +2,17 @@ import React from "react";
 import "../App.css";
 
 function About() {
-  function handleSubmit(uname) {
+  function handleSubmit({ target }) {
     let username = sessionStorage.getItem("Username") || "";
-    username.push(uname.value);
-    sessionStorage.setItem("Username");
+    username = target.uname.value;
+    sessionStorage.setItem("Username", username);
   }
-  const uname = document.getElementById("uname");
 
   return (
     <div>
       <h1>About</h1>
       <br></br>
-      <form onSubmit={() => handleSubmit(uname)}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="uname">Username:</label>
         <input type="text" id="uname" name="uname" required={true} />
         <br></br>
